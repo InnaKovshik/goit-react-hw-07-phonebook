@@ -1,6 +1,8 @@
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import logger from 'redux-logger';
+import { contactReduser } from './contact';
 import {
+  // persistStore,
   FLUSH,
   REHYDRATE,
   PAUSE,
@@ -8,7 +10,6 @@ import {
   PURGE,
   REGISTER,
 } from 'redux-persist';
-import phonebookReducer from './phonebook-reducers';
 
 const middleware = [
   ...getDefaultMiddleware({
@@ -19,10 +20,12 @@ const middleware = [
   logger,
 ];
 
-export const store = configureStore({
+const store = configureStore({
   reducer: {
-    contacts: phonebookReducer,
+    contacts: contactReduser,
   },
-  middleware,
+  middleware: middleware,
   devTools: process.env.NODE_ENV === 'development',
 });
+
+export default store;
